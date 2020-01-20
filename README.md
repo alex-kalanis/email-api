@@ -1,18 +1,15 @@
-# Upload Per-Partes
+# Email Api
 
-Uploading files via HTTP style per-partes
+Sending emails - decoupled creating and processing 
 
-Contains libraries for uploading large files with JavaScript FileApi
-with things like real truth-telling progress bar or available upload resume.
-
-This is the mixed package - contains sever-side implementation in Python and PHP.
+Contains libraries for sending emails via bunch of services.
 
 # PHP Installation
 
 ```
 {
     "require": {
-        "alex-kalanis/upload-per-partes": "dev-master"
+        "alex-kalanis/email-api": "dev-master"
     }
 }
 ```
@@ -25,30 +22,10 @@ familiar with composer)
 
 1.) Use your autoloader (if not already done via Composer autoloader)
 
-2.) Connect the "UploadPerPartes\Upload" into your app. When it came necessary
-you can extends every library to comply your use-case; mainly your storage and
-processing.
+2.) Add some external packages with connection to the local or remote services.
 
-3.) Copy and connect the frontend library "uploader.ts" into your app. You need
-something like Grunt to translate TypeScript into JavaScript. You can also extends
-included classes to comply your use-case; mainly for styling.
+3.) Connect the "EmailApi\Sending" into your app. Extends it for setting your case.
 
-# Python Installation
+4.) Extend your libraries by interfaces inside the package.
 
-into your "setup.py":
-
-```
-    install_requires=[
-        'kw_upload',
-    ]
-```
-
-# Python Usage
-
-1.) Connect the "kw_upload\upload" into your app. When it came necessary
-you can extends every library to comply your use-case; mainly your storage and
-processing.
-
-3.) Copy and connect the frontend library "uploader.ts" into your app. You need
-something like Grunt to translate TypeScript into JavaScript. You can also extends
-included classes to comply your use-case; mainly for styling.
+5.) Just call sending.
