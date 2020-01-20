@@ -1,0 +1,22 @@
+{
+    "name": "alex-kalanis/email-api",
+    "description": "Basic API for mailing in PHP",
+    "keywords": [],
+    "license": "BSD 3-Clause",
+    "type": "project",
+    "require": {
+        "php": ">=7.1.0",
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "EmailApi\\": "php-src/"
+        }
+    },
+    "scripts": {
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
