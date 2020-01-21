@@ -48,6 +48,10 @@ class Content implements I\Content
         $this->subject = (string)$this->subject;
         $this->body = (string)$this->body;
         $this->tag = (string)$this->tag;
+        $this->plain = is_null($this->plain) ? null : (string)$this->plain;
+        $this->unsubEmail = is_null($this->unsubEmail) ? null : (string)$this->unsubEmail ;
+        $this->unsubLink = is_null($this->unsubLink) ? null : (string)$this->unsubLink ;
+        $this->unsubByClick = (bool)$this->unsubByClick;
         return $this;
     }
 

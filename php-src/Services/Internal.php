@@ -36,7 +36,9 @@ class Internal implements Interfaces\Sending
         if (!empty($content->getAttachments())) {
             return new Basics\Result(false, 'No attachments available for simple mailing');
         }
-        mail($to->getEmail(), $content->getSubject(), $content->getHtmlBody());
-        return new Basics\Result(true, '');
+        // @codeCoverageIgnoreStart
+        $result = mail($to->getEmail(), $content->getSubject(), $content->getHtmlBody());
+        return new Basics\Result((bool)$result, $result);
+        // @codeCoverageIgnoreEnd
     }
 }

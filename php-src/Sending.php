@@ -118,6 +118,7 @@ class Sending implements Interfaces\Sending
      * @param Exceptions\EmailException $ex
      * @throws Exceptions\EmailException
      * @see static::CALL_EXCEPTION
+     * @codeCoverageIgnore due passes on tests
      */
     protected function whenSendFails(Interfaces\Sending $service, Exceptions\EmailException $ex): void
     {

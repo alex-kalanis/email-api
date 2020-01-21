@@ -71,67 +71,73 @@ class HaltedResultFail extends HaltedBase
 
 class SendingFailTest extends CommonTestClass
 {
+    /**
+     * @throws Exceptions\EmailException
+     */
     public function testSimple()
     {
-        try {
-            $lib = new HaltedBase();
-            $data = $lib->sendEmail($this->mockContent(), $this->mockUser());
-            $this->assertFalse($data->getStatus());
-            $this->assertEquals('Sending failed.', $data->getData());
-        } catch (Exceptions\EmailException $ex) {
-            $this->assertFalse(true,'cannot be here');
-        }
+        $lib = new HaltedBase();
+        $data = $lib->sendEmail($this->mockContent(), $this->mockUser());
+        $this->assertFalse($data->getStatus());
+        $this->assertEquals('Sending failed.', $data->getData());
     }
 
+    /**
+     * @expectedException \EmailApi\Exceptions\EmailException
+     * @expectedExceptionMessage No service left
+     */
     public function testWithExcept()
     {
-        try {
-            $lib = new HaltedNothingLeft();
-            $lib->sendEmail($this->mockContent(), $this->mockUser());
-            throw new Exceptions\EmailException('cannot be here');
-        } catch (Exceptions\EmailException $ex) {
-            $this->assertEquals('No service left', $ex->getMessage());
-        }
+        $lib = new HaltedNothingLeft();
+        $lib->sendEmail($this->mockContent(), $this->mockUser());
     }
 
+    /**
+     * @throws Exceptions\EmailException
+     */
+    public function testWithExceptToFinal()
+    {
+        $lib = new HaltedBase();
+        $data = $lib->sendEmail($this->mockContent(), $this->mockUser());
+        $this->assertFalse($data->getStatus());
+        $this->assertEquals('Sending failed.', $data->getData());
+    }
+
+    /**
+     * @throws Exceptions\EmailException
+     */
     public function testDeadSend()
     {
-        try {
-            $lib = new HaltedSendFail();
-            $lib->mayReturnFirstUnsuccessful(true);
-            $lib->order[Sending::SERVICE_TESTING]->canUseService = true;
-            $lib->order[Sending::SERVICE_TESTING]->getResult = true;
-            $data = $lib->sendEmail($this->mockContent(), $this->mockUser());
-            $this->assertFalse($data->getStatus());
-            $this->assertEquals('died', $data->getData());
-        } catch (Exceptions\EmailException $ex) {
-            $this->assertFalse(true,'cannot be here');
-        }
+        $lib = new HaltedSendFail();
+        $lib->mayReturnFirstUnsuccessful(true);
+        $lib->order[Sending::SERVICE_TESTING]->canUseService = true;
+        $lib->order[Sending::SERVICE_TESTING]->getResult = true;
+        $data = $lib->sendEmail($this->mockContent(), $this->mockUser());
+        $this->assertFalse($data->getStatus());
+        $this->assertEquals('died', $data->getData());
     }
 
+    /**
+     * @expectedException \EmailApi\Exceptions\EmailException
+     * @expectedExceptionMessage Catch on failed result
+     */
     public function testDeadSendResult()
     {
-        try {
-            $lib = new HaltedResultFail();
-            $lib->order[Sending::SERVICE_TESTING]->canUseService = true;
-            $lib->order[Sending::SERVICE_TESTING]->getResult = true;
-            $lib->sendEmail($this->mockContent(), $this->mockUser());
-            throw new Exceptions\EmailException('cannot be here');
-        } catch (Exceptions\EmailException $ex) {
-            $this->assertEquals('Catch on failed result', $ex->getMessage());
-        }
+        $lib = new HaltedResultFail();
+        $lib->order[Sending::SERVICE_TESTING]->canUseService = true;
+        $lib->order[Sending::SERVICE_TESTING]->getResult = true;
+        $lib->sendEmail($this->mockContent(), $this->mockUser());
     }
 
+    /**
+     * @expectedException \EmailApi\Exceptions\EmailException
+     * @expectedExceptionMessage die on send
+     */
     public function testDeadSendExcept()
     {
-        try {
-            $lib = new HaltedResultFail();
-            $lib->order[Sending::SERVICE_TESTING]->canUseService = true;
-            $lib->order[Sending::SERVICE_TESTING]->getResult = false;
-            $lib->sendEmail($this->mockContent(), $this->mockUser());
-            throw new Exceptions\EmailException('cannot be here');
-        } catch (Exceptions\EmailException $ex) {
-            $this->assertEquals('die on send', $ex->getMessage());
-        }
+        $lib = new HaltedResultFail();
+        $lib->order[Sending::SERVICE_TESTING]->canUseService = true;
+        $lib->order[Sending::SERVICE_TESTING]->getResult = false;
+        $lib->sendEmail($this->mockContent(), $this->mockUser());
     }
 }

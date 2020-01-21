@@ -67,49 +67,54 @@ class SendingStopResultSuccess extends SendingBase
 
 class SendingTest extends CommonTestClass
 {
+    public function testCheck()
+    {
+        $lib = new Sending();
+        $this->assertFalse($lib->canUseService(), 'There is no service by default');
+        $this->assertEquals(0, $lib->systemServiceId());
+        $lib = new SendingBase();
+        $this->assertTrue($lib->canUseService(), 'There is services');
+    }
+
+    /**
+     * @throws Exceptions\EmailException
+     */
     public function testSimple()
     {
-        try {
-            $lib = new SendingBase();
-            $data = $lib->sendEmail($this->mockContent(), $this->mockUser());
-            $this->assertTrue($data->getStatus());
-            $this->assertEquals('Dummy service with check', $data->getData());
-            $this->assertNull($data->getRemoteId());
-        } catch (Exceptions\EmailException $ex) {
-            $this->assertFalse(true,'cannot be here');
-        }
+        $lib = new SendingBase();
+        $data = $lib->sendEmail($this->mockContent(), $this->mockUser());
+        $this->assertTrue($data->getStatus());
+        $this->assertEquals('Dummy service with check', $data->getData());
+        $this->assertNull($data->getRemoteId());
     }
 
+    /**
+     * @expectedException \EmailApi\Exceptions\EmailException
+     * @expectedExceptionMessage Catch on before process
+     */
     public function testProcessBefore()
     {
-        try {
-            $lib = new SendingStopBeforeProcess();
-            $lib->sendEmail($this->mockContent(), $this->mockUser());
-            throw new Exceptions\EmailException('cannot be here');
-        } catch (Exceptions\EmailException $ex) {
-            $this->assertEquals('Catch on before process', $ex->getMessage());
-        }
+        $lib = new SendingStopBeforeProcess();
+        $lib->sendEmail($this->mockContent(), $this->mockUser());
     }
 
+    /**
+     * @expectedException \EmailApi\Exceptions\EmailException
+     * @expectedExceptionMessage Catch on before send
+     */
     public function testBeforeSend()
     {
-        try {
-            $lib = new SendingStopBeforeSend();
-            $lib->sendEmail($this->mockContent(), $this->mockUser());
-            throw new Exceptions\EmailException('cannot be here');
-        } catch (Exceptions\EmailException $ex) {
-            $this->assertEquals('Catch on before send', $ex->getMessage());
-        }
+        $lib = new SendingStopBeforeSend();
+        $lib->sendEmail($this->mockContent(), $this->mockUser());
     }
 
+    /**
+     * @expectedException \EmailApi\Exceptions\EmailException
+     * @expectedExceptionMessage Catch on success send
+     */
     public function testProcessSuccess()
     {
-        try {
-            $lib = new SendingStopResultSuccess();
-            $lib->sendEmail($this->mockContent(), $this->mockUser());
-            throw new Exceptions\EmailException('cannot be here');
-        } catch (Exceptions\EmailException $ex) {
-            $this->assertEquals('Catch on success send', $ex->getMessage());
-        }
+        $lib = new SendingStopResultSuccess();
+        $lib->sendEmail($this->mockContent(), $this->mockUser());
     }
 }
