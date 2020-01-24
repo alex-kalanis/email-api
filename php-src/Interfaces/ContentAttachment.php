@@ -24,6 +24,7 @@ interface ContentAttachment
     /**
      * Attachment content
      * Can be empty when passed as file from local drive
+     * For TYPE_IMAGE it contains ContentID - where to add this image into the message
      * @return string
      */
     public function getFileContent(): string;
