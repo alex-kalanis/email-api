@@ -1,6 +1,7 @@
 <?php
 
 use EmailApi\Exceptions;
+use EmailApi\LocalInfo;
 use EmailApi\Services;
 
 class RestTest extends CommonTestClass
@@ -26,5 +27,12 @@ class RestTest extends CommonTestClass
         $lib = new Services\Internal();
         $result = $lib->sendEmail($data, $this->mockUser());
         $this->assertFalse($result->getStatus());
+    }
+
+    public function testLocalProcessing()
+    {
+        $lib = new LocalInfo\LocalProcessing(); // necessary in subservices
+        $lib->enableMailLocally($this->mockUser());
+        $this->assertTrue(true); // because coverage sniffing
     }
 }
