@@ -6,37 +6,6 @@ use EmailApi\Interfaces;
 use EmailApi\LocalInfo;
 use EmailApi\Sending;
 
-class DummyService implements Interfaces\Sending
-{
-    public function canUseService(): bool
-    {
-        return true;
-    }
-
-    public function systemServiceId(): int
-    {
-        return static::SERVICE_TESTING;
-    }
-
-    public function sendEmail(Interfaces\Content $content, Interfaces\EmailUser $to, ?Interfaces\EmailUser $from = null, ?Interfaces\EmailUser $replyTo = null, $toDisabled = false): Basics\Result
-    {
-        return new Basics\Result(
-            !empty($content->getHtmlBody())
-            && !empty($to->getEmail()),
-            'Dummy service with check'
-        );
-    }
-}
-
-class SendingBase extends Sending
-{
-    public function __construct(Interfaces\LocalInfo $info)
-    {
-        parent::__construct($info);
-        $this->order[static::SERVICE_TESTING] = new DummyService();
-    }
-}
-
 class SendingStopBeforeProcess extends LocalInfo\DefaultInfo
 {
     public function beforeProcess(Interfaces\Content $content, Interfaces\EmailUser $to, ?Interfaces\EmailUser $from = null): void
@@ -74,10 +43,10 @@ class SendingTest extends CommonTestClass
 {
     public function testCheck()
     {
-        $lib = new Sending(new LocalInfo\DefaultInfo());
+        $lib = new Sending(new LocalInfo\DefaultInfo(), $this->mockServices(false));
         $this->assertFalse($lib->canUseService(), 'There is no service by default');
         $this->assertEquals(0, $lib->systemServiceId());
-        $lib = new SendingBase(new LocalInfo\DefaultInfo());
+        $lib = new Sending(new LocalInfo\DefaultInfo(), $this->mockServices());
         $this->assertTrue($lib->canUseService(), 'There is services');
     }
 
@@ -86,7 +55,7 @@ class SendingTest extends CommonTestClass
      */
     public function testSimple()
     {
-        $lib = new SendingBase(new LocalInfo\DefaultInfo());
+        $lib = new Sending(new LocalInfo\DefaultInfo(), $this->mockServices());
         $data = $lib->sendEmail($this->mockContent(), $this->mockUser());
         $this->assertTrue($data->getStatus());
         $this->assertEquals('Dummy service with check', $data->getData());
@@ -99,7 +68,7 @@ class SendingTest extends CommonTestClass
      */
     public function testProcessBefore()
     {
-        $lib = new SendingBase(new SendingStopBeforeProcess());
+        $lib = new Sending(new SendingStopBeforeProcess(), $this->mockServices());
         $lib->sendEmail($this->mockContent(), $this->mockUser());
     }
 
@@ -109,7 +78,7 @@ class SendingTest extends CommonTestClass
      */
     public function testBeforeSend()
     {
-        $lib = new SendingBase(new SendingStopBeforeSend());
+        $lib = new Sending(new SendingStopBeforeSend(), $this->mockServices());
         $lib->sendEmail($this->mockContent(), $this->mockUser());
     }
 
@@ -119,7 +88,16 @@ class SendingTest extends CommonTestClass
      */
     public function testProcessSuccess()
     {
-        $lib = new SendingBase(new SendingStopResultSuccess());
+        $lib = new Sending(new SendingStopResultSuccess(), $this->mockServices());
         $lib->sendEmail($this->mockContent(), $this->mockUser());
+    }
+
+    protected function mockServices(bool $withDummyService = true): LocalInfo\ServicesOrdering
+    {
+        $ordering = new LocalInfo\ServicesOrdering();
+        if ($withDummyService) {
+            $ordering->addService(new DummyService());
+        }
+        return $ordering;
     }
 }

@@ -6,10 +6,6 @@ namespace EmailApi;
  * Class Sending
  * Send mails by correct service
  * Select the only one - first successful one
- *
- * Nacpat tomu:
- * - iterator obsahujici ony sluzby; musi umet sluzbu vykopnout
- * - objekt vvtvarejici prostor na ty lokalni volani a preklad - ok
  */
 class Sending implements Interfaces\Sending
 {
@@ -17,29 +13,20 @@ class Sending implements Interfaces\Sending
     const CALL_RUN_DIED = 591;
     const CALL_EXCEPTION = 592;
 
-    /** @var Interfaces\Sending[] */
-    protected $order = [];
+    /** @var LocalInfo\ServicesOrdering */
+    protected $servicesIterator = null;
     /** @var Interfaces\LocalInfo */
     protected $info = null;
-    /** @var bool */
-    protected $returnOnUnsuccessful = false;
 
-    public function __construct(Interfaces\LocalInfo $info)
+    public function __construct(Interfaces\LocalInfo $info, LocalInfo\ServicesOrdering $ordering)
     {
         $this->info = $info;
-        // there is an area for definition of used services
-        // set them into the array with a bit sane keys - you will debug that
+        $this->servicesIterator = $ordering;
     }
 
     public function canUseService(): bool
     {
-        return !empty($this->order);
-    }
-
-    public function mayReturnFirstUnsuccessful(bool $set = false)
-    {
-        $this->returnOnUnsuccessful = $set;
-        return $this;
+        return $this->servicesIterator->canUseService();
     }
 
     public function systemServiceId(): int
@@ -61,7 +48,7 @@ class Sending implements Interfaces\Sending
         $this->info->beforeProcess($content, $to, $from);
 
         if ($this->canUseService()) {
-            foreach ($this->order as $index => $lib) {
+            foreach ($this->servicesIterator as $index => $lib) {
                 if (!$this->isAllowed($lib)) {
                     continue;
                 }
@@ -74,8 +61,8 @@ class Sending implements Interfaces\Sending
                         return $result;
                     } else {
                         $this->info->whenResultIsNotSuccessful($lib, $result);
-                        unset($this->order[$index]); // throw it out, if we send more mail, then it won't be bothered anymore on this run
-                        if ($this->returnOnUnsuccessful) {
+                        $this->servicesIterator->removeService($lib); // throw it out, if we send more mail, then it won't be bothered anymore on this run
+                        if ($this->servicesIterator->isReturningAfterFirstUnsuccessful()) {
                             return $result;
                         }
                     }
