@@ -3,6 +3,7 @@
 use EmailApi\Basics;
 use EmailApi\Exceptions;
 use EmailApi\Interfaces;
+use EmailApi\LocalInfo;
 use EmailApi\Sending;
 
 class DummyService implements Interfaces\Sending
@@ -29,38 +30,42 @@ class DummyService implements Interfaces\Sending
 
 class SendingBase extends Sending
 {
-    public function __construct()
+    public function __construct(Interfaces\LocalInfo $info)
     {
-        parent::__construct();
+        parent::__construct($info);
         $this->order[static::SERVICE_TESTING] = new DummyService();
     }
 }
 
-class SendingStopBeforeProcess extends SendingBase
+class SendingStopBeforeProcess extends LocalInfo\DefaultInfo
 {
     public function beforeProcess(Interfaces\Content $content, Interfaces\EmailUser $to, ?Interfaces\EmailUser $from = null): void
     {
+        parent::beforeProcess($content, $to, $from);
         throw new Exceptions\EmailException('Catch on before process');
     }
 }
 
-class SendingStopBeforeSend extends SendingBase
+class SendingStopBeforeSend extends LocalInfo\DefaultInfo
 {
     public function beforeSend(Interfaces\Sending $service, Interfaces\Content $content): void
     {
+        parent::beforeSend($service, $content);
         throw new Exceptions\EmailException('Catch on before send');
     }
 }
 
-class SendingStopResultSuccess extends SendingBase
+class SendingStopResultSuccess extends LocalInfo\DefaultInfo
 {
     public function whenResultIsSuccessful(Interfaces\Sending $service, Basics\Result $result): void
     {
+        parent::whenResultIsSuccessful($service, $result);
         throw new Exceptions\EmailException('Catch on success send');
     }
 
-    protected function whenSendFails(Interfaces\Sending $service, Exceptions\EmailException $ex): void
+    public function whenSendFails(Interfaces\Sending $service, Exceptions\EmailException $ex): void
     {
+        parent::whenSendFails($service, $ex);
         throw $ex; // pass it through catch
     }
 }
@@ -69,10 +74,10 @@ class SendingTest extends CommonTestClass
 {
     public function testCheck()
     {
-        $lib = new Sending();
+        $lib = new Sending(new LocalInfo\DefaultInfo());
         $this->assertFalse($lib->canUseService(), 'There is no service by default');
         $this->assertEquals(0, $lib->systemServiceId());
-        $lib = new SendingBase();
+        $lib = new SendingBase(new LocalInfo\DefaultInfo());
         $this->assertTrue($lib->canUseService(), 'There is services');
     }
 
@@ -81,7 +86,7 @@ class SendingTest extends CommonTestClass
      */
     public function testSimple()
     {
-        $lib = new SendingBase();
+        $lib = new SendingBase(new LocalInfo\DefaultInfo());
         $data = $lib->sendEmail($this->mockContent(), $this->mockUser());
         $this->assertTrue($data->getStatus());
         $this->assertEquals('Dummy service with check', $data->getData());
@@ -94,7 +99,7 @@ class SendingTest extends CommonTestClass
      */
     public function testProcessBefore()
     {
-        $lib = new SendingStopBeforeProcess();
+        $lib = new SendingBase(new SendingStopBeforeProcess());
         $lib->sendEmail($this->mockContent(), $this->mockUser());
     }
 
@@ -104,7 +109,7 @@ class SendingTest extends CommonTestClass
      */
     public function testBeforeSend()
     {
-        $lib = new SendingStopBeforeSend();
+        $lib = new SendingBase(new SendingStopBeforeSend());
         $lib->sendEmail($this->mockContent(), $this->mockUser());
     }
 
@@ -114,7 +119,7 @@ class SendingTest extends CommonTestClass
      */
     public function testProcessSuccess()
     {
-        $lib = new SendingStopResultSuccess();
+        $lib = new SendingBase(new SendingStopResultSuccess());
         $lib->sendEmail($this->mockContent(), $this->mockUser());
     }
 }

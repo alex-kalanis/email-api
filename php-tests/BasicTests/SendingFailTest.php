@@ -3,6 +3,7 @@
 use EmailApi\Basics;
 use EmailApi\Exceptions;
 use EmailApi\Interfaces;
+use EmailApi\LocalInfo;
 use EmailApi\Sending;
 
 class HaltedService implements Interfaces\Sending
@@ -33,38 +34,42 @@ class HaltedBase extends Sending
 {
     public $order = [];
 
-    public function __construct()
+    public function __construct(Interfaces\LocalInfo $info)
     {
-        parent::__construct();
+        parent::__construct($info);
         $this->order[static::SERVICE_TESTING] = new HaltedService();
     }
 }
 
-class HaltedNothingLeft extends HaltedBase
+class HaltedNothingLeft extends LocalInfo\DefaultInfo
 {
     public function whenNoDefinitionIsUsable(): void
     {
+        parent::whenNoDefinitionIsUsable();
         throw new Exceptions\EmailException('No service left');
     }
 }
 
-class HaltedSendFail extends HaltedBase
+class HaltedSendFail extends LocalInfo\DefaultInfo
 {
     public function whenSendFails(Interfaces\Sending $service, Exceptions\EmailException $ex): void
     {
+        parent::whenSendFails($service, $ex);
         throw new Exceptions\EmailException('Catch on failed service', null, $ex);
     }
 }
 
-class HaltedResultFail extends HaltedBase
+class HaltedResultFail extends LocalInfo\DefaultInfo
 {
-    protected function whenResultIsNotSuccessful(Interfaces\Sending $service, Basics\Result $result): void
+    public function whenResultIsNotSuccessful(Interfaces\Sending $service, Basics\Result $result): void
     {
+        parent::whenResultIsNotSuccessful($service, $result);
         throw new Exceptions\EmailException('Catch on failed result');
     }
 
-    protected function whenSendFails(Interfaces\Sending $service, Exceptions\EmailException $ex): void
+    public function whenSendFails(Interfaces\Sending $service, Exceptions\EmailException $ex): void
     {
+        parent::whenSendFails($service, $ex);
         throw $ex; // pass it through catch
     }
 }
@@ -76,7 +81,7 @@ class SendingFailTest extends CommonTestClass
      */
     public function testSimple()
     {
-        $lib = new HaltedBase();
+        $lib = new HaltedBase(new LocalInfo\DefaultInfo());
         $data = $lib->sendEmail($this->mockContent(), $this->mockUser());
         $this->assertFalse($data->getStatus());
         $this->assertEquals('Sending failed.', $data->getData());
@@ -88,7 +93,7 @@ class SendingFailTest extends CommonTestClass
      */
     public function testWithExcept()
     {
-        $lib = new HaltedNothingLeft();
+        $lib = new Sending(new HaltedNothingLeft());
         $lib->sendEmail($this->mockContent(), $this->mockUser());
     }
 
@@ -97,7 +102,7 @@ class SendingFailTest extends CommonTestClass
      */
     public function testWithExceptToFinal()
     {
-        $lib = new HaltedBase();
+        $lib = new HaltedBase(new LocalInfo\DefaultInfo());
         $data = $lib->sendEmail($this->mockContent(), $this->mockUser());
         $this->assertFalse($data->getStatus());
         $this->assertEquals('Sending failed.', $data->getData());
@@ -108,7 +113,7 @@ class SendingFailTest extends CommonTestClass
      */
     public function testDeadSend()
     {
-        $lib = new HaltedSendFail();
+        $lib = new HaltedBase(new HaltedSendFail());
         $lib->mayReturnFirstUnsuccessful(true);
         $lib->order[Sending::SERVICE_TESTING]->canUseService = true;
         $lib->order[Sending::SERVICE_TESTING]->getResult = true;
@@ -123,7 +128,7 @@ class SendingFailTest extends CommonTestClass
      */
     public function testDeadSendResult()
     {
-        $lib = new HaltedResultFail();
+        $lib = new HaltedBase(new HaltedResultFail());
         $lib->order[Sending::SERVICE_TESTING]->canUseService = true;
         $lib->order[Sending::SERVICE_TESTING]->getResult = true;
         $lib->sendEmail($this->mockContent(), $this->mockUser());
@@ -135,7 +140,7 @@ class SendingFailTest extends CommonTestClass
      */
     public function testDeadSendExcept()
     {
-        $lib = new HaltedResultFail();
+        $lib = new HaltedBase(new HaltedResultFail());
         $lib->order[Sending::SERVICE_TESTING]->canUseService = true;
         $lib->order[Sending::SERVICE_TESTING]->getResult = false;
         $lib->sendEmail($this->mockContent(), $this->mockUser());

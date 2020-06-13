@@ -6,6 +6,10 @@ namespace EmailApi;
  * Class Sending
  * Send mails by correct service
  * Select the only one - first successful one
+ *
+ * Nacpat tomu:
+ * - iterator obsahujici ony sluzby; musi umet sluzbu vykopnout
+ * - objekt vvtvarejici prostor na ty lokalni volani a preklad - ok
  */
 class Sending implements Interfaces\Sending
 {
@@ -15,11 +19,14 @@ class Sending implements Interfaces\Sending
 
     /** @var Interfaces\Sending[] */
     protected $order = [];
+    /** @var Interfaces\LocalInfo */
+    protected $info = null;
     /** @var bool */
     protected $returnOnUnsuccessful = false;
 
-    public function __construct()
+    public function __construct(Interfaces\LocalInfo $info)
     {
+        $this->info = $info;
         // there is an area for definition of used services
         // set them into the array with a bit sane keys - you will debug that
     }
@@ -51,7 +58,7 @@ class Sending implements Interfaces\Sending
      */
     public function sendEmail(Interfaces\Content $content, Interfaces\EmailUser $to, ?Interfaces\EmailUser $from = null, ?Interfaces\EmailUser $replyTo = null, $toDisabled = false): Basics\Result
     {
-        $this->beforeProcess($content, $to, $from);
+        $this->info->beforeProcess($content, $to, $from);
 
         if ($this->canUseService()) {
             foreach ($this->order as $index => $lib) {
@@ -59,26 +66,26 @@ class Sending implements Interfaces\Sending
                     continue;
                 }
                 $result = null;
-                $this->beforeSend($lib, $content);
+                $this->info->beforeSend($lib, $content);
                 try {
                     $result = $lib->sendEmail($content, $to, $from, $replyTo, $toDisabled);
                     if ($result->getStatus()) {
-                        $this->whenResultIsSuccessful($lib, $result);
+                        $this->info->whenResultIsSuccessful($lib, $result);
                         return $result;
                     } else {
-                        $this->whenResultIsNotSuccessful($lib, $result);
+                        $this->info->whenResultIsNotSuccessful($lib, $result);
                         unset($this->order[$index]); // throw it out, if we send more mail, then it won't be bothered anymore on this run
                         if ($this->returnOnUnsuccessful) {
                             return $result;
                         }
                     }
                 } catch (Exceptions\EmailException $ex) {
-                    $this->whenSendFails($lib, $ex);
+                    $this->info->whenSendFails($lib, $ex);
                 }
             }
         }
-        $this->whenNoDefinitionIsUsable();
-        return new Basics\Result(false, $this->getLangSendingFailed());
+        $this->info->whenNoDefinitionIsUsable();
+        return new Basics\Result(false, $this->info->getLangSendingFailed());
     }
 
     /**
@@ -88,79 +95,5 @@ class Sending implements Interfaces\Sending
     protected function isAllowed($lib): bool
     {
         return (($lib instanceof Interfaces\Sending) && $lib->canUseService());
-    }
-
-    /**
-     * For log whole action of sending a mail
-     * @param Interfaces\Content $content
-     * @param Interfaces\EmailUser $to
-     * @param Interfaces\EmailUser|null $from
-     * @throws Exceptions\EmailException
-     */
-    protected function beforeProcess(Interfaces\Content $content, Interfaces\EmailUser $to, ?Interfaces\EmailUser $from = null): void
-    {
-    }
-
-    /**
-     * For log which service did it
-     * @param Interfaces\Sending $service
-     * @param Interfaces\Content $content
-     * @throws Exceptions\EmailException
-     */
-    protected function beforeSend(Interfaces\Sending $service, Interfaces\Content $content): void
-    {
-    }
-
-    /**
-     * We have got an exception from sending service - something weird happend
-     * Position to log it
-     * @param Interfaces\Sending $service
-     * @param Exceptions\EmailException $ex
-     * @throws Exceptions\EmailException
-     * @see static::CALL_EXCEPTION
-     * @codeCoverageIgnore due passes on tests
-     */
-    protected function whenSendFails(Interfaces\Sending $service, Exceptions\EmailException $ex): void
-    {
-    }
-
-    /**
-     * Log it when there is successful result from service
-     * @param Interfaces\Sending $service
-     * @param Basics\Result $result
-     * @throws Exceptions\EmailException
-     */
-    protected function whenResultIsSuccessful(Interfaces\Sending $service, Basics\Result $result): void
-    {
-    }
-
-    /**
-     * When sending returns fail for any reason
-     * @param Interfaces\Sending $service
-     * @param Basics\Result $result
-     * @throws Exceptions\EmailException
-     * @see static::CALL_RUN_DIED
-     */
-    protected function whenResultIsNotSuccessful(Interfaces\Sending $service, Basics\Result $result): void
-    {
-    }
-
-    /**
-     * When there is nothing to do because there is no available definition
-     * Log somewhere that we have unknown sending services
-     * @throws Exceptions\EmailException
-     * @see static::CALL_UNKNOWN
-     */
-    protected function whenNoDefinitionIsUsable(): void
-    {
-    }
-
-    /**
-     * Translation for totally dead result
-     * @return string
-     */
-    protected function getLangSendingFailed(): string
-    {
-        return 'Sending failed.';
     }
 }
