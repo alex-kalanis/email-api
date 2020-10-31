@@ -29,3 +29,18 @@ familiar with composer)
 4.) Extend your libraries by interfaces inside the package.
 
 5.) Just call sending.
+
+# Python Installation
+
+into your "setup.py":
+
+```
+    install_requires=[
+        'kw_email',
+    ]
+```
+
+# Python Usage
+
+1.) Connect the "kw_email.sending" into your app. When it came necessary
+you can extends every library to comply your use-case; mainly your sending agent.

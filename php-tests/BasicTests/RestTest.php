@@ -4,6 +4,7 @@ use EmailApi\Exceptions;
 use EmailApi\LocalInfo;
 use EmailApi\Services;
 
+
 class RestTest extends CommonTestClass
 {
     public function testExcept()

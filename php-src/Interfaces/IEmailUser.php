@@ -3,12 +3,12 @@
 namespace EmailApi\Interfaces;
 
 /**
- * Interface EmailUser
+ * Interface IEmailUser
  * @package EmailApi\Interfaces
  *
  * Interface for targeting mail
  */
-interface EmailUser
+interface IEmailUser
 {
     /**
      * Returns email of user

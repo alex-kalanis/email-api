@@ -6,13 +6,13 @@ use EmailApi\Exceptions\EmailException;
 use EmailApi\Basics\Result;
 
 /**
- * Class Sending
+ * Class ISending
  * @package EmailApi\Interfaces
  * Main interface for sending an email
  * Implementing class process the sending itself
  * Calling class has a choice which service will be used
  */
-interface Sending
+interface ISending
 {
     const SERVICE_SYSTEM = 0;
     const SERVICE_TESTING = 1;
@@ -35,14 +35,14 @@ interface Sending
     public function systemServiceId(): int;
 
     /**
-     * @param Content $content Message with attachments
-     * @param EmailUser $to Target user
-     * @param EmailUser|null $from Who sends the message
-     * @param EmailUser|null $replyTo reply to this user - for larger services
+     * @param IContent $content Message with attachments
+     * @param IEmailUser $to Target user
+     * @param IEmailUser|null $from Who sends the message
+     * @param IEmailUser|null $replyTo reply to this user - for larger services
      * @param bool $toDisabled When user bounced mail then it's necessary to pass info for skip check
      * @return Result
      * @throws EmailException
      */
-    public function sendEmail(Content $content, EmailUser $to, ?EmailUser $from = null, ?EmailUser $replyTo = null, $toDisabled = false): Result;
+    public function sendEmail(IContent $content, IEmailUser $to, ?IEmailUser $from = null, ?IEmailUser $replyTo = null, $toDisabled = false): Result;
 
 }

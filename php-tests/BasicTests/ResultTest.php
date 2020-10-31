@@ -1,5 +1,8 @@
 <?php
 
+use EmailApi\Basics\Result;
+
+
 class ResultTest extends CommonTestClass
 {
     public function testSimple()
@@ -11,7 +14,7 @@ class ResultTest extends CommonTestClass
 
     public function testClear()
     {
-        $data = new \EmailApi\Basics\Result(true, 'none', 12);
+        $data = new Result(true, 'none', 12);
         $this->assertTrue($data->status);
         $this->assertEquals('none', $data->data);
         $this->assertEquals(12, $data->remoteId);

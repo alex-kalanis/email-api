@@ -6,6 +6,7 @@ use EmailApi\Interfaces;
 use EmailApi\LocalInfo;
 use EmailApi\Sending;
 
+
 class HaltedNothingLeft extends LocalInfo\DefaultInfo
 {
     public function whenNoDefinitionIsUsable(): void
@@ -15,29 +16,32 @@ class HaltedNothingLeft extends LocalInfo\DefaultInfo
     }
 }
 
+
 class HaltedSendFail extends LocalInfo\DefaultInfo
 {
-    public function whenSendFails(Interfaces\Sending $service, Exceptions\EmailException $ex): void
+    public function whenSendFails(Interfaces\ISending $service, Exceptions\EmailException $ex): void
     {
         parent::whenSendFails($service, $ex);
         throw new Exceptions\EmailException('Catch on failed service', null, $ex);
     }
 }
 
+
 class HaltedResultFail extends LocalInfo\DefaultInfo
 {
-    public function whenResultIsNotSuccessful(Interfaces\Sending $service, Basics\Result $result): void
+    public function whenResultIsNotSuccessful(Interfaces\ISending $service, Basics\Result $result): void
     {
         parent::whenResultIsNotSuccessful($service, $result);
         throw new Exceptions\EmailException('Catch on failed result');
     }
 
-    public function whenSendFails(Interfaces\Sending $service, Exceptions\EmailException $ex): void
+    public function whenSendFails(Interfaces\ISending $service, Exceptions\EmailException $ex): void
     {
         parent::whenSendFails($service, $ex);
         throw $ex; // pass it through catch
     }
 }
+
 
 class SendingFailTest extends CommonTestClass
 {

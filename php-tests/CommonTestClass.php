@@ -3,6 +3,7 @@
 use EmailApi\Basics;
 use PHPUnit\Framework\TestCase;
 
+
 class CommonTestClass extends TestCase
 {
 //    public function providerBasic()

@@ -12,18 +12,18 @@ use EmailApi\Interfaces;
  */
 class ServicesOrdering implements \Iterator
 {
-    /** @var Interfaces\Sending[] */
+    /** @var Interfaces\ISending[] */
     protected $services = [];
     /** @var bool */
     protected $returnOnUnsuccessful = false;
 
-    public function addService(Interfaces\Sending $service): self
+    public function addService(Interfaces\ISending $service): self
     {
         $this->services[$service->systemServiceId()] = $service;
         return $this;
     }
 
-    public function removeService(Interfaces\Sending $service): self
+    public function removeService(Interfaces\ISending $service): self
     {
         unset($this->services[$service->systemServiceId()]);
         return $this;

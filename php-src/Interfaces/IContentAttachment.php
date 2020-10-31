@@ -3,12 +3,12 @@
 namespace EmailApi\Interfaces;
 
 /**
- * Class ContentAttachment
+ * Class IContentAttachment
  * @package EmailApi\Interfaces
  * Interface for adding attachments into mail
  * Concrete implementation in on implementing class.
  */
-interface ContentAttachment
+interface IContentAttachment
 {
     const TYPE_INLINE = 1;
     const TYPE_FILE = 2;

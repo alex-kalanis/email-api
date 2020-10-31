@@ -3,12 +3,12 @@
 namespace EmailApi\Interfaces;
 
 /**
- * Class Content
+ * Class IContent
  * @package EmailApi\Interfaces
  * Interface which describes email content which will be sent.
  * Concrete implementation in on implementing class.
  */
-interface Content
+interface IContent
 {
     /**
      * Mail subject
@@ -54,7 +54,7 @@ interface Content
 
     /**
      * Attachments
-     * @return ContentAttachment[]
+     * @return IContentAttachment[]
      */
     public function getAttachments();
 }

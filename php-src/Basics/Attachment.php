@@ -2,13 +2,13 @@
 
 namespace EmailApi\Basics;
 
-use EmailApi\Interfaces\ContentAttachment;
+use EmailApi\Interfaces\IContentAttachment;
 
 /**
  * Class Attachment
  * @package EmaiApi\Basics
  */
-class Attachment implements ContentAttachment
+class Attachment implements IContentAttachment
 {
     /** @var string */
     public $name = '';

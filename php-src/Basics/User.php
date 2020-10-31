@@ -9,7 +9,7 @@ use EmailApi\Interfaces;
  * @package Lib\Email\User
  * Simple implementation of user which sends the emails
  */
-class User implements Interfaces\EmailUser
+class User implements Interfaces\IEmailUser
 {
     /** @var string */
     public $email = '';

@@ -16,8 +16,6 @@ setup(
     long_description_content_type='text/markdown',
     url='https://github.com/alex-kalanis/email-api',
     install_require=[
-        # 'base64',
-        # 'hashlib',
     ],
     packages=find_packages(),
     classifiers=[

@@ -9,7 +9,7 @@ use EmailApi\Basics;
  * Class Internal
  * Make and send each mail
  */
-class Internal implements Interfaces\Sending
+class Internal implements Interfaces\ISending
 {
     public function canUseService(): bool
     {
@@ -24,14 +24,14 @@ class Internal implements Interfaces\Sending
     /**
      * Send mail directly via php - no hurdles anywhere, no security too
      *
-     * @param Interfaces\Content $content
-     * @param Interfaces\EmailUser $to
-     * @param Interfaces\EmailUser $from
-     * @param Interfaces\EmailUser $replyTo
+     * @param Interfaces\IContent $content
+     * @param Interfaces\IEmailUser $to
+     * @param Interfaces\IEmailUser $from
+     * @param Interfaces\IEmailUser $replyTo
      * @param bool $toDisabled
      * @return Basics\Result
      */
-    public function sendEmail(Interfaces\Content $content, Interfaces\EmailUser $to, ?Interfaces\EmailUser $from = null, ?Interfaces\EmailUser $replyTo = null, $toDisabled = false): Basics\Result
+    public function sendEmail(Interfaces\IContent $content, Interfaces\IEmailUser $to, ?Interfaces\IEmailUser $from = null, ?Interfaces\IEmailUser $replyTo = null, $toDisabled = false): Basics\Result
     {
         if (!empty($content->getAttachments())) {
             return new Basics\Result(false, 'No attachments available for simple mailing');

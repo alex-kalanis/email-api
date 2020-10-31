@@ -7,7 +7,7 @@ namespace EmailApi;
  * Send mails by correct service
  * Select the only one - first successful one
  */
-class Sending implements Interfaces\Sending
+class Sending implements Interfaces\ISending
 {
     const CALL_UNKNOWN = 590;
     const CALL_RUN_DIED = 591;
@@ -15,10 +15,10 @@ class Sending implements Interfaces\Sending
 
     /** @var LocalInfo\ServicesOrdering */
     protected $servicesIterator = null;
-    /** @var Interfaces\LocalInfo */
+    /** @var Interfaces\ILocalInfo */
     protected $info = null;
 
-    public function __construct(Interfaces\LocalInfo $info, LocalInfo\ServicesOrdering $ordering)
+    public function __construct(Interfaces\ILocalInfo $info, LocalInfo\ServicesOrdering $ordering)
     {
         $this->info = $info;
         $this->servicesIterator = $ordering;
@@ -35,15 +35,15 @@ class Sending implements Interfaces\Sending
     }
 
     /**
-     * @param Interfaces\Content $content
-     * @param Interfaces\EmailUser $to
-     * @param Interfaces\EmailUser|null $from
-     * @param Interfaces\EmailUser|null $replyTo
+     * @param Interfaces\IContent $content
+     * @param Interfaces\IEmailUser $to
+     * @param Interfaces\IEmailUser|null $from
+     * @param Interfaces\IEmailUser|null $replyTo
      * @param bool $toDisabled
      * @return Basics\Result
      * @throws Exceptions\EmailException
      */
-    public function sendEmail(Interfaces\Content $content, Interfaces\EmailUser $to, ?Interfaces\EmailUser $from = null, ?Interfaces\EmailUser $replyTo = null, $toDisabled = false): Basics\Result
+    public function sendEmail(Interfaces\IContent $content, Interfaces\IEmailUser $to, ?Interfaces\IEmailUser $from = null, ?Interfaces\IEmailUser $replyTo = null, $toDisabled = false): Basics\Result
     {
         $this->info->beforeProcess($content, $to, $from);
 
@@ -81,6 +81,6 @@ class Sending implements Interfaces\Sending
      */
     protected function isAllowed($lib): bool
     {
-        return (($lib instanceof Interfaces\Sending) && $lib->canUseService());
+        return (($lib instanceof Interfaces\ISending) && $lib->canUseService());
     }
 }

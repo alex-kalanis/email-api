@@ -3,14 +3,14 @@
 namespace EmailApi\Interfaces;
 
 /**
- * Class LocalProcessing
+ * Class ILocalProcessing
  * What to do with mail when it's something need locally
  */
-interface LocalProcessing
+interface ILocalProcessing
 {
     /**
      * Remove blocks made on local machine by callbacks
-     * @param EmailUser $to Who will be enabled locally
+     * @param IEmailUser $to Who will be enabled locally
      */
-    public function enableMailLocally(EmailUser $to): void;
+    public function enableMailLocally(IEmailUser $to): void;
 }

@@ -4,7 +4,8 @@ use EmailApi\Basics;
 use EmailApi\Interfaces;
 use EmailApi\Exceptions;
 
-class DummyService implements Interfaces\Sending
+
+class DummyService implements Interfaces\ISending
 {
     protected $canUseService = true;
     protected $getPassedResult = true;
@@ -27,7 +28,7 @@ class DummyService implements Interfaces\Sending
         return static::SERVICE_TESTING;
     }
 
-    public function sendEmail(Interfaces\Content $content, Interfaces\EmailUser $to, ?Interfaces\EmailUser $from = null, ?Interfaces\EmailUser $replyTo = null, $toDisabled = false): Basics\Result
+    public function sendEmail(Interfaces\IContent $content, Interfaces\IEmailUser $to, ?Interfaces\IEmailUser $from = null, ?Interfaces\IEmailUser $replyTo = null, $toDisabled = false): Basics\Result
     {
         if ($this->getPassedResult) {
             return new Basics\Result(
@@ -36,10 +37,11 @@ class DummyService implements Interfaces\Sending
                 'Dummy service with check'
             );
         }
+
         if ($this->getFailedResult) {
             return new Basics\Result(false, 'died');
         }
-        throw new Exceptions\EmailException('die on send');
 
+        throw new Exceptions\EmailException('die on send');
     }
 }

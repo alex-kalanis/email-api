@@ -8,9 +8,9 @@ use EmailApi\Interfaces;
  * Class LocalProcessing
  * Default implementation
  */
-class LocalProcessing implements Interfaces\LocalProcessing
+class LocalProcessing implements Interfaces\ILocalProcessing
 {
-    public function enableMailLocally(Interfaces\EmailUser $to): void
+    public function enableMailLocally(Interfaces\IEmailUser $to): void
     {
     }
 }

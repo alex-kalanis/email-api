@@ -1,5 +1,8 @@
 <?php
 
+use EmailApi\Basics\Content;
+
+
 class ContentTest extends CommonTestClass
 {
     public function testSimple()
@@ -20,7 +23,7 @@ class ContentTest extends CommonTestClass
 
     public function testClear()
     {
-        $data = new \EmailApi\Basics\Content;
+        $data = new Content();
         $data->setData('testing content 2', 'qwertzuiopasdfghjklyxcvbnm123', 'on_testing_service456');
         $data->plain = 'qwertzuiopasdfghjklyxcvbnm987';
         $data->unsubEmail = 'qwertzuiopasdfghjklyxcvbnm654';

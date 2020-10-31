@@ -9,7 +9,7 @@ use EmailApi\Interfaces as I;
  * @package EmaiApi\Basics
  * Smallest possible email content
  */
-class Content implements I\Content
+class Content implements I\IContent
 {
     /** @var string */
     public $subject = '';
@@ -32,7 +32,7 @@ class Content implements I\Content
     /** @var bool */
     public $unsubByClick = false;
 
-    /** @var I\ContentAttachment[] */
+    /** @var I\IContentAttachment[] */
     protected $attachments = [];
 
     public function setData(string $subject = '', string $body = '', string $tag = '')
@@ -90,7 +90,7 @@ class Content implements I\Content
         return (bool)$this->unsubByClick;
     }
 
-    public function addAttachment(I\ContentAttachment $attachment)
+    public function addAttachment(I\IContentAttachment $attachment)
     {
         $this->attachments[] = $attachment;
         return $this;
