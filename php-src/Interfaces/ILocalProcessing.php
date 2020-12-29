@@ -1,6 +1,7 @@
 <?php
 
-namespace EmailApi\Interfaces;
+namespace kalanis\EmailApi\Interfaces;
+
 
 /**
  * Class ILocalProcessing

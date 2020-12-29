@@ -1,9 +1,11 @@
 <?php
 
-namespace EmailApi\Interfaces;
+namespace kalanis\EmailApi\Interfaces;
 
-use EmailApi\Exceptions\EmailException;
-use EmailApi\Basics\Result;
+
+use kalanis\EmailApi\Exceptions\EmailException;
+use kalanis\EmailApi\Basics\Result;
+
 
 /**
  * Class ISending

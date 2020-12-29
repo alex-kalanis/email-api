@@ -1,12 +1,16 @@
 <?php
 
-namespace EmailApi\Exceptions;
+namespace kalanis\EmailApi\Exceptions;
+
+
+use Exception;
+
 
 /**
  * Class EmailException
- * @package EmailApi\Exceptions
+ * @package kalanis\EmailApi\Exceptions
  * Dead email exception - basic one when something does not work
  */
-class EmailException extends \Exception
+class EmailException extends Exception
 {
 }

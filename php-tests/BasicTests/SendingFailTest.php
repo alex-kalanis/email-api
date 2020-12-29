@@ -1,10 +1,10 @@
 <?php
 
-use EmailApi\Basics;
-use EmailApi\Exceptions;
-use EmailApi\Interfaces;
-use EmailApi\LocalInfo;
-use EmailApi\Sending;
+use kalanis\EmailApi\Basics;
+use kalanis\EmailApi\Exceptions;
+use kalanis\EmailApi\Interfaces;
+use kalanis\EmailApi\LocalInfo;
+use kalanis\EmailApi\Sending;
 
 
 class HaltedNothingLeft extends LocalInfo\DefaultInfo
@@ -57,13 +57,14 @@ class SendingFailTest extends CommonTestClass
     }
 
     /**
-     * @expectedException \EmailApi\Exceptions\EmailException
-     * @expectedExceptionMessage No service left
+     * @throws Exceptions\EmailException
      */
     public function testNoServiceExcept()
     {
         $lib = new Sending(new HaltedNothingLeft(), $this->mockServices(false));
+        $this->expectException(Exceptions\EmailException::class);
         $lib->sendEmail($this->mockContent(), $this->mockUser());
+        $this->expectExceptionMessageMatches('No service left');
     }
 
     /**
@@ -89,23 +90,25 @@ class SendingFailTest extends CommonTestClass
     }
 
     /**
-     * @expectedException \EmailApi\Exceptions\EmailException
-     * @expectedExceptionMessage Catch on failed result
+     * @throws Exceptions\EmailException
      */
     public function testSendingDiedResult()
     {
         $lib = new Sending(new HaltedResultFail(), $this->mockServices());
+        $this->expectException(Exceptions\EmailException::class);
         $lib->sendEmail($this->mockContent(), $this->mockUser());
+        $this->expectExceptionMessageMatches('Catch on failed result');
     }
 
     /**
-     * @expectedException \EmailApi\Exceptions\EmailException
-     * @expectedExceptionMessage die on send
+     * @throws Exceptions\EmailException
      */
     public function testSendingDiedExcept()
     {
         $lib = new Sending(new HaltedResultFail(), $this->mockServices(true, false));
+        $this->expectException(Exceptions\EmailException::class);
         $lib->sendEmail($this->mockContent(), $this->mockUser());
+        $this->expectExceptionMessageMatches('die on send');
     }
 
     protected function mockServices(bool $withDummyService = true, bool $getResult = true, bool $canUseService = true): LocalInfo\ServicesOrdering

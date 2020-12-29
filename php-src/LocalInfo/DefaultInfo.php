@@ -1,10 +1,12 @@
 <?php
 
-namespace EmailApi\LocalInfo;
+namespace kalanis\EmailApi\LocalInfo;
 
-use EmailApi\Basics;
-use EmailApi\Exceptions;
-use EmailApi\Interfaces;
+
+use kalanis\EmailApi\Basics;
+use kalanis\EmailApi\Exceptions;
+use kalanis\EmailApi\Interfaces;
+
 
 /**
  * Class DefaultInfo

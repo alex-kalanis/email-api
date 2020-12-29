@@ -24,7 +24,7 @@ familiar with composer)
 
 2.) Add some external packages with connection to the local or remote services.
 
-3.) Connect the "EmailApi\Sending" into your app. Extends it for setting your case.
+3.) Connect the "kalanis\EmailApi\Sending" into your app. Extends it for setting your case.
 
 4.) Extend your libraries by interfaces inside the package.
 

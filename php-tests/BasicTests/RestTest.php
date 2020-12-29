@@ -1,8 +1,8 @@
 <?php
 
-use EmailApi\Exceptions;
-use EmailApi\LocalInfo;
-use EmailApi\Services;
+use kalanis\EmailApi\Exceptions;
+use kalanis\EmailApi\LocalInfo;
+use kalanis\EmailApi\Services;
 
 
 class RestTest extends CommonTestClass

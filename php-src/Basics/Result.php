@@ -1,10 +1,11 @@
 <?php
 
-namespace EmailApi\Basics;
+namespace kalanis\EmailApi\Basics;
+
 
 /**
  * Class Result
- * @package EmailApi\Basics
+ * @package kalanis\EmailApi\Basics
  * Result from sending service
  */
 class Result

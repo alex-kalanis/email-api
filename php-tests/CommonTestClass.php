@@ -1,6 +1,6 @@
 <?php
 
-use EmailApi\Basics;
+use kalanis\EmailApi\Basics;
 use PHPUnit\Framework\TestCase;
 
 

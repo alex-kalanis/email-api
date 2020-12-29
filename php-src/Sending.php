@@ -1,6 +1,7 @@
 <?php
 
-namespace EmailApi;
+namespace kalanis\EmailApi;
+
 
 /**
  * Class Sending

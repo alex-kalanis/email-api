@@ -1,6 +1,6 @@
 <?php
 
-use EmailApi\Basics\Result;
+use kalanis\EmailApi\Basics\Result;
 
 
 class ResultTest extends CommonTestClass

@@ -1,9 +1,11 @@
 <?php
 
-namespace EmailApi\Services;
+namespace kalanis\EmailApi\Services;
 
-use EmailApi\Interfaces;
-use EmailApi\Basics;
+
+use kalanis\EmailApi\Interfaces;
+use kalanis\EmailApi\Basics;
+
 
 /**
  * Class Internal

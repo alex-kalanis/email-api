@@ -1,6 +1,6 @@
 <?php
 
-use EmailApi\Basics\Attachment;
+use kalanis\EmailApi\Basics\Attachment;
 
 
 class AttachmentTest extends CommonTestClass

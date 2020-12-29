@@ -1,10 +1,10 @@
 <?php
 
-use EmailApi\Basics;
-use EmailApi\Exceptions;
-use EmailApi\Interfaces;
-use EmailApi\LocalInfo;
-use EmailApi\Sending;
+use kalanis\EmailApi\Basics;
+use kalanis\EmailApi\Exceptions;
+use kalanis\EmailApi\Interfaces;
+use kalanis\EmailApi\LocalInfo;
+use kalanis\EmailApi\Sending;
 
 
 class SendingStopBeforeProcess extends LocalInfo\DefaultInfo
@@ -67,33 +67,36 @@ class SendingTest extends CommonTestClass
     }
 
     /**
-     * @expectedException \EmailApi\Exceptions\EmailException
-     * @expectedExceptionMessage Catch on before process
+     * @throws Exceptions\EmailException
      */
     public function testProcessBefore()
     {
         $lib = new Sending(new SendingStopBeforeProcess(), $this->mockServices());
+        $this->expectException(Exceptions\EmailException::class);
         $lib->sendEmail($this->mockContent(), $this->mockUser());
+        $this->expectExceptionMessageMatches('Catch on before process');
     }
 
     /**
-     * @expectedException \EmailApi\Exceptions\EmailException
-     * @expectedExceptionMessage Catch on before send
+     * @throws Exceptions\EmailException
      */
     public function testBeforeSend()
     {
         $lib = new Sending(new SendingStopBeforeSend(), $this->mockServices());
+        $this->expectException(Exceptions\EmailException::class);
         $lib->sendEmail($this->mockContent(), $this->mockUser());
+        $this->expectExceptionMessageMatches('Catch on before send');
     }
 
     /**
-     * @expectedException \EmailApi\Exceptions\EmailException
-     * @expectedExceptionMessage Catch on success send
+     * @throws Exceptions\EmailException
      */
     public function testProcessSuccess()
     {
         $lib = new Sending(new SendingStopResultSuccess(), $this->mockServices());
+        $this->expectException(Exceptions\EmailException::class);
         $lib->sendEmail($this->mockContent(), $this->mockUser());
+        $this->expectExceptionMessageMatches('Catch on success send');
     }
 
     protected function mockServices(bool $withDummyService = true): LocalInfo\ServicesOrdering

@@ -1,8 +1,8 @@
 <?php
 
-use EmailApi\Basics;
-use EmailApi\Interfaces;
-use EmailApi\Exceptions;
+use kalanis\EmailApi\Basics;
+use kalanis\EmailApi\Interfaces;
+use kalanis\EmailApi\Exceptions;
 
 
 class DummyService implements Interfaces\ISending

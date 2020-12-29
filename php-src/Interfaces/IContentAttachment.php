@@ -1,10 +1,11 @@
 <?php
 
-namespace EmailApi\Interfaces;
+namespace kalanis\EmailApi\Interfaces;
+
 
 /**
  * Class IContentAttachment
- * @package EmailApi\Interfaces
+ * @package kalanis\EmailApi\Interfaces
  * Interface for adding attachments into mail
  * Concrete implementation in on implementing class.
  */

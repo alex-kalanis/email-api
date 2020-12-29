@@ -1,13 +1,15 @@
 <?php
 
-namespace EmailApi\Interfaces;
+namespace kalanis\EmailApi\Interfaces;
 
-use EmailApi\Exceptions;
-use EmailApi\Basics\Result;
+
+use kalanis\EmailApi\Exceptions;
+use kalanis\EmailApi\Basics\Result;
+
 
 /**
  * Class ILocalInfo
- * @package EmailApi\Interfaces
+ * @package kalanis\EmailApi\Interfaces
  * Interface for setting info about local environment
  * Implementing class process local-system-dependent calls
  */

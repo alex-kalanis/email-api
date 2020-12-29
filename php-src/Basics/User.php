@@ -1,12 +1,14 @@
 <?php
 
-namespace EmailApi\Basics;
+namespace kalanis\EmailApi\Basics;
 
-use EmailApi\Interfaces;
+
+use kalanis\EmailApi\Interfaces;
+
 
 /**
  * Class User
- * @package Lib\Email\User
+ * @package kalanis\EmailApi\Interfaces
  * Simple implementation of user which sends the emails
  */
 class User implements Interfaces\IEmailUser

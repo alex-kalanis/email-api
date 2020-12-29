@@ -1,15 +1,17 @@
 <?php
 
-namespace EmailApi\Basics;
+namespace kalanis\EmailApi\Basics;
 
-use EmailApi\Interfaces as I;
+
+use kalanis\EmailApi\Interfaces;
+
 
 /**
  * Class Content
- * @package EmaiApi\Basics
+ * @package kalanis\EmaiApi\Basics
  * Smallest possible email content
  */
-class Content implements I\IContent
+class Content implements Interfaces\IContent
 {
     /** @var string */
     public $subject = '';
@@ -32,7 +34,7 @@ class Content implements I\IContent
     /** @var bool */
     public $unsubByClick = false;
 
-    /** @var I\IContentAttachment[] */
+    /** @var Interfaces\IContentAttachment[] */
     protected $attachments = [];
 
     public function setData(string $subject = '', string $body = '', string $tag = '')
@@ -90,7 +92,7 @@ class Content implements I\IContent
         return (bool)$this->unsubByClick;
     }
 
-    public function addAttachment(I\IContentAttachment $attachment)
+    public function addAttachment(Interfaces\IContentAttachment $attachment)
     {
         $this->attachments[] = $attachment;
         return $this;

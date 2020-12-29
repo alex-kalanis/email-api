@@ -1,10 +1,11 @@
 <?php
 
-namespace EmailApi\Interfaces;
+namespace kalanis\EmailApi\Interfaces;
+
 
 /**
  * Class IContent
- * @package EmailApi\Interfaces
+ * @package kalanis\EmailApi\Interfaces
  * Interface which describes email content which will be sent.
  * Concrete implementation in on implementing class.
  */

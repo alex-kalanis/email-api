@@ -1,6 +1,6 @@
 <?php
 
-use EmailApi\Basics\Content;
+use kalanis\EmailApi\Basics\Content;
 
 
 class ContentTest extends CommonTestClass

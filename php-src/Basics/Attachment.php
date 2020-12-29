@@ -1,12 +1,14 @@
 <?php
 
-namespace EmailApi\Basics;
+namespace kalanis\EmailApi\Basics;
 
-use EmailApi\Interfaces\IContentAttachment;
+
+use kalanis\EmailApi\Interfaces\IContentAttachment;
+
 
 /**
  * Class Attachment
- * @package EmaiApi\Basics
+ * @package kalanis\EmaiApi\Basics
  */
 class Attachment implements IContentAttachment
 {

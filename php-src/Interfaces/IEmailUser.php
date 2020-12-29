@@ -1,10 +1,11 @@
 <?php
 
-namespace EmailApi\Interfaces;
+namespace kalanis\EmailApi\Interfaces;
+
 
 /**
  * Interface IEmailUser
- * @package EmailApi\Interfaces
+ * @package kalanis\EmailApi\Interfaces
  *
  * Interface for targeting mail
  */
