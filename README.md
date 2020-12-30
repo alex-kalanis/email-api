@@ -9,7 +9,7 @@ Contains libraries for sending emails via bunch of services.
 ```
 {
     "require": {
-        "alex-kalanis/email-api": "dev-master"
+        "alex-kalanis/email-api": "1.0"
     }
 }
 ```

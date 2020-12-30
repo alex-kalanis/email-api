@@ -1,0 +1,14 @@
+{
+  "author": "kalanis",
+  "name": "EmailApi",
+  "description": "Basic API for mailing in PHP",
+  "source": "https://github.com/alex-kalanis/email-api",
+  "license": "BSD-3-Clause",
+  "require": {
+    "php": ">=7.2.0"
+  },
+  "require-dev": {
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

@@ -16,4 +16,4 @@ __pycache__
 # checks
 phpunit
 phpunit*
-.phpunit
+.phpunit*
