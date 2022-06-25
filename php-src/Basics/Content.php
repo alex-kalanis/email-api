@@ -37,7 +37,7 @@ class Content implements Interfaces\IContent
     /** @var Interfaces\IContentAttachment[] */
     protected $attachments = [];
 
-    public function setData(string $subject = '', string $body = '', string $tag = '')
+    public function setData(string $subject = '', string $body = '', string $tag = ''): self
     {
         $this->subject = $subject;
         $this->body = $body;
@@ -45,26 +45,26 @@ class Content implements Interfaces\IContent
         return $this;
     }
 
-    public function sanitize()
+    public function sanitize(): self
     {
-        $this->subject = (string)$this->subject;
-        $this->body = (string)$this->body;
-        $this->tag = (string)$this->tag;
-        $this->plain = is_null($this->plain) ? null : (string)$this->plain;
-        $this->unsubEmail = is_null($this->unsubEmail) ? null : (string)$this->unsubEmail ;
-        $this->unsubLink = is_null($this->unsubLink) ? null : (string)$this->unsubLink ;
-        $this->unsubByClick = (bool)$this->unsubByClick;
+        $this->subject = (string) $this->subject;
+        $this->body = (string) $this->body;
+        $this->tag = (string) $this->tag;
+        $this->plain = is_null($this->plain) ? null : (string) $this->plain;
+        $this->unsubEmail = is_null($this->unsubEmail) ? null : (string) $this->unsubEmail ;
+        $this->unsubLink = is_null($this->unsubLink) ? null : (string) $this->unsubLink ;
+        $this->unsubByClick = (bool) $this->unsubByClick;
         return $this;
     }
 
     public function getSubject(): string
     {
-        return (string)$this->subject;
+        return (string) $this->subject;
     }
 
     public function getHtmlBody(): string
     {
-        return (string)$this->body;
+        return (string) $this->body;
     }
 
     public function getPlainBody(): ?string
@@ -74,7 +74,7 @@ class Content implements Interfaces\IContent
 
     public function getTag(): string
     {
-        return (string)$this->tag;
+        return (string) $this->tag;
     }
 
     public function getUnsubscribeEmail(): ?string
@@ -89,21 +89,24 @@ class Content implements Interfaces\IContent
 
     public function canUnsubscribeOneClick(): bool
     {
-        return (bool)$this->unsubByClick;
+        return (bool) $this->unsubByClick;
     }
 
-    public function addAttachment(Interfaces\IContentAttachment $attachment)
+    public function addAttachment(Interfaces\IContentAttachment $attachment): self
     {
         $this->attachments[] = $attachment;
         return $this;
     }
 
-    public function getAttachments()
+    /**
+     * @return array<Interfaces\IContentAttachment>
+     */
+    public function getAttachments(): array
     {
         return $this->attachments;
     }
 
-    public function resetAttachments()
+    public function resetAttachments(): self
     {
         $this->attachments = [];
         return $this;

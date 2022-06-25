@@ -40,7 +40,7 @@ class Internal implements Interfaces\ISending
         }
         // @codeCoverageIgnoreStart
         $result = mail($to->getEmail(), $content->getSubject(), $content->getHtmlBody());
-        return new Basics\Result((bool)$result, $result);
+        return new Basics\Result(boolval($result), strval($result));
         // @codeCoverageIgnoreEnd
     }
 }

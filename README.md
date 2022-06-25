@@ -1,5 +1,13 @@
 # Email Api
 
+[![Build Status](https://travis-ci.org/alex-kalanis/email-api.svg?branch=master)](https://travis-ci.org/alex-kalanis/email-api)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/alex-kalanis/email-api/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/alex-kalanis/email-api/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/alex-kalanis/email-api/v/stable.svg?v=1)](https://packagist.org/packages/alex-kalanis/email-api)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
+[![Downloads](https://img.shields.io/packagist/dt/alex-kalanis/email-api.svg?v1)](https://packagist.org/packages/alex-kalanis/email-api)
+[![License](https://poser.pugx.org/alex-kalanis/email-api/license.svg?v=1)](https://packagist.org/packages/alex-kalanis/email-api)
+[![Code Coverage](https://scrutinizer-ci.com/g/alex-kalanis/email-api/badges/coverage.png?b=master&v=1)](https://scrutinizer-ci.com/g/alex-kalanis/email-api/?branch=master)
+
 Sending emails - decoupled creating and processing 
 
 Contains libraries for sending emails via bunch of services.

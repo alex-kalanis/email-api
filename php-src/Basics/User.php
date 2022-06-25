@@ -18,17 +18,17 @@ class User implements Interfaces\IEmailUser
     /** @var string */
     public $name = '';
 
-    public function setData($email, $name = '')
+    public function setData(string $email, string $name = ''): self
     {
         $this->name = $name;
         $this->email = $email;
         return $this;
     }
 
-    public function sanitize()
+    public function sanitize(): self
     {
-        $this->name = (string)$this->name;
-        $this->email = (string)$this->email;
+        $this->name = (string) $this->name;
+        $this->email = (string) $this->email;
         return $this;
     }
 

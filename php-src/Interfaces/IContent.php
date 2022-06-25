@@ -57,5 +57,5 @@ interface IContent
      * Attachments
      * @return IContentAttachment[]
      */
-    public function getAttachments();
+    public function getAttachments(): array;
 }

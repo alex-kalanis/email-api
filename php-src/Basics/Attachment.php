@@ -25,7 +25,7 @@ class Attachment implements IContentAttachment
     /** @var int */
     public $type = self::TYPE_INLINE;
 
-    public function setData(string $name, string $path = '', string $content = '', string $mime = '', string $encoding = '', int $type = self::TYPE_INLINE)
+    public function setData(string $name, string $path = '', string $content = '', string $mime = '', string $encoding = '', int $type = self::TYPE_INLINE): self
     {
         $this->name = $name;
         $this->path = $path;
@@ -36,44 +36,44 @@ class Attachment implements IContentAttachment
         return $this;
     }
 
-    public function sanitize()
+    public function sanitize(): self
     {
-        $this->name = (string)$this->name;
-        $this->path = (string)$this->path;
-        $this->mime = (string)$this->mime;
-        $this->content = (string)$this->content;
-        $this->encoding = (string)$this->encoding;
-        $this->type = (int)$this->type;
+        $this->name = (string) $this->name;
+        $this->path = (string) $this->path;
+        $this->mime = (string) $this->mime;
+        $this->content = (string) $this->content;
+        $this->encoding = (string) $this->encoding;
+        $this->type = (int) $this->type;
         return $this;
     }
 
     public function getFileName(): string
     {
-        return (string)$this->name;
+        return (string) $this->name;
     }
 
     public function getFileContent(): string
     {
-        return (string)$this->content;
+        return (string) $this->content;
     }
 
     public function getLocalPath(): string
     {
-        return (string)$this->path;
+        return (string) $this->path;
     }
 
     public function getFileMime(): string
     {
-        return (string)$this->mime;
+        return (string) $this->mime;
     }
 
     public function getEncoding(): string
     {
-        return (string)$this->encoding;
+        return (string) $this->encoding;
     }
 
     public function getType(): int
     {
-        return (int)$this->type;
+        return (int) $this->type;
     }
 }

@@ -38,7 +38,7 @@ interface ILocalInfo
      * @param ISending $service
      * @param Exceptions\EmailException $ex
      * @throws Exceptions\EmailException
-     * @see \EmailApi\Sending::CALL_EXCEPTION
+     * @see \kalanis\EmailApi\Sending::CALL_EXCEPTION
      */
     public function whenSendFails(ISending $service, Exceptions\EmailException $ex): void;
 
@@ -55,7 +55,7 @@ interface ILocalInfo
      * @param ISending $service
      * @param Result $result
      * @throws Exceptions\EmailException
-     * @see \EmailApi\Sending::CALL_RUN_DIED
+     * @see \kalanis\EmailApi\Sending::CALL_RUN_DIED
      */
     public function whenResultIsNotSuccessful(ISending $service, Result $result): void;
 
@@ -63,7 +63,7 @@ interface ILocalInfo
      * When there is nothing to do because there is no available definition
      * Log somewhere that we have unknown sending services
      * @throws Exceptions\EmailException
-     * @see \EmailApi\Sending::CALL_UNKNOWN
+     * @see \kalanis\EmailApi\Sending::CALL_UNKNOWN
      */
     public function whenNoDefinitionIsUsable(): void;
 

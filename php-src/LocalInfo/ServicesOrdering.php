@@ -3,18 +3,21 @@
 namespace kalanis\EmailApi\LocalInfo;
 
 
+use Iterator;
 use kalanis\EmailApi\Interfaces;
 
 
 /**
  * Class ServicesOrdering
+ * @package kalanis\EmailApi\LocalInfo
  * Default services available on local installation
  * Contains typical PHP object-to-array boilerplate
  * You can extend this class to specify order of available services
+ * @implements Iterator<int|null, Interfaces\ISending>
  */
-class ServicesOrdering implements \Iterator
+class ServicesOrdering implements Iterator
 {
-    /** @var Interfaces\ISending[] */
+    /** @var array<int, Interfaces\ISending> */
     protected $services = [];
     /** @var bool */
     protected $returnOnUnsuccessful = false;
@@ -49,12 +52,12 @@ class ServicesOrdering implements \Iterator
 
     public function current()
     {
-        return current($this->services);
+        return (false !== ($service = current($this->services))) ? $service : null;
     }
 
-    public function next()
+    public function next(): void
     {
-        return next($this->services);
+        next($this->services);
     }
 
     public function key()
@@ -62,13 +65,13 @@ class ServicesOrdering implements \Iterator
         return key($this->services);
     }
 
-    public function valid()
+    public function valid(): bool
     {
         $key = $this->key();
-        return (!is_null($key) && false !== $key);
+        return !is_null($key);
     }
 
-    public function rewind()
+    public function rewind(): void
     {
         reset($this->services);
     }
