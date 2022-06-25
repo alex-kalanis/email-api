@@ -42,8 +42,8 @@ interface ISending
      * @param IEmailUser|null $from Who sends the message
      * @param IEmailUser|null $replyTo reply to this user - for larger services
      * @param bool $toDisabled When user bounced mail then it's necessary to pass info for skip check
-     * @return Result
      * @throws EmailException
+     * @return Result
      */
     public function sendEmail(IContent $content, IEmailUser $to, ?IEmailUser $from = null, ?IEmailUser $replyTo = null, $toDisabled = false): Result;
 

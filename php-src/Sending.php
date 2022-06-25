@@ -41,8 +41,8 @@ class Sending implements Interfaces\ISending
      * @param Interfaces\IEmailUser|null $from
      * @param Interfaces\IEmailUser|null $replyTo
      * @param bool $toDisabled
-     * @return Basics\Result
      * @throws Exceptions\EmailException
+     * @return Basics\Result
      */
     public function sendEmail(Interfaces\IContent $content, Interfaces\IEmailUser $to, ?Interfaces\IEmailUser $from = null, ?Interfaces\IEmailUser $replyTo = null, $toDisabled = false): Basics\Result
     {
@@ -50,10 +50,10 @@ class Sending implements Interfaces\ISending
 
         if ($this->canUseService()) {
             foreach ($this->servicesIterator as $index => $lib) {
+                /** @var Interfaces\ISending $lib */
                 if (!$this->isAllowed($lib)) {
                     continue;
                 }
-                $result = null;
                 $this->info->beforeSend($lib, $content);
                 try {
                     $result = $lib->sendEmail($content, $to, $from, $replyTo, $toDisabled);
