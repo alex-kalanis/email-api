@@ -50,6 +50,7 @@ class ServicesOrdering implements Iterator
         return (!empty($this->services));
     }
 
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return (false !== ($service = current($this->services))) ? $service : null;
@@ -60,6 +61,7 @@ class ServicesOrdering implements Iterator
         next($this->services);
     }
 
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return key($this->services);
