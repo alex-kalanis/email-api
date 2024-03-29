@@ -48,8 +48,7 @@ class Sending implements Interfaces\ISending
 
         if ($this->canUseService()) {
             foreach ($this->servicesIterator as $index => $lib) {
-                if ($lib) {
-                    /** @var Interfaces\ISending $lib */
+                if ($lib && is_object($lib) && ($lib instanceof Interfaces\ISending)) {
                     if (!$this->isAllowed($lib)) {
                         continue;
                     }

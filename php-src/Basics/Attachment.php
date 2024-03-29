@@ -32,12 +32,12 @@ class Attachment implements IContentAttachment
 
     public function sanitize(): self
     {
-        $this->name = (string) $this->name;
-        $this->path = (string) $this->path;
-        $this->mime = (string) $this->mime;
-        $this->content = (string) $this->content;
-        $this->encoding = (string) $this->encoding;
-        $this->type = (int) $this->type;
+        $this->name = strval($this->name);
+        $this->path = strval($this->path);
+        $this->mime = strval($this->mime);
+        $this->content = strval($this->content);
+        $this->encoding = strval($this->encoding);
+        $this->type = intval($this->type);
         return $this;
     }
 
