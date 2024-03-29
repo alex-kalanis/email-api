@@ -13,7 +13,7 @@ use kalanis\EmailApi\Interfaces;
  * Default services available on local installation
  * Contains typical PHP object-to-array boilerplate
  * You can extend this class to specify order of available services
- * @implements Iterator<int|null, Interfaces\ISending>
+ * @implements Iterator<int|null, Interfaces\ISending|null>
  */
 class ServicesOrdering implements Iterator
 {

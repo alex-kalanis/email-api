@@ -48,25 +48,27 @@ class Sending implements Interfaces\ISending
 
         if ($this->canUseService()) {
             foreach ($this->servicesIterator as $index => $lib) {
-                /** @var Interfaces\ISending $lib */
-                if (!$this->isAllowed($lib)) {
-                    continue;
-                }
-                $this->info->beforeSend($lib, $content);
-                try {
-                    $result = $lib->sendEmail($content, $to, $from, $replyTo, $toDisabled);
-                    if ($result->getStatus()) {
-                        $this->info->whenResultIsSuccessful($lib, $result);
-                        return $result;
-                    } else {
-                        $this->info->whenResultIsNotSuccessful($lib, $result);
-                        $this->servicesIterator->removeService($lib); // throw it out, if we send more mail, then it won't be bothered anymore on this run
-                        if ($this->servicesIterator->isReturningAfterFirstUnsuccessful()) {
-                            return $result;
-                        }
+                if ($lib) {
+                    /** @var Interfaces\ISending $lib */
+                    if (!$this->isAllowed($lib)) {
+                        continue;
                     }
-                } catch (Exceptions\EmailException $ex) {
-                    $this->info->whenSendFails($lib, $ex);
+                    $this->info->beforeSend($lib, $content);
+                    try {
+                        $result = $lib->sendEmail($content, $to, $from, $replyTo, $toDisabled);
+                        if ($result->getStatus()) {
+                            $this->info->whenResultIsSuccessful($lib, $result);
+                            return $result;
+                        } else {
+                            $this->info->whenResultIsNotSuccessful($lib, $result);
+                            $this->servicesIterator->removeService($lib); // throw it out, if we send more mail, then it won't be bothered anymore on this run
+                            if ($this->servicesIterator->isReturningAfterFirstUnsuccessful()) {
+                                return $result;
+                            }
+                        }
+                    } catch (Exceptions\EmailException $ex) {
+                        $this->info->whenSendFails($lib, $ex);
+                    }
                 }
             }
         }
