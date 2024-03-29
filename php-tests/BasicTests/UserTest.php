@@ -19,8 +19,8 @@ class UserTest extends CommonTestClass
     public function testSanitize()
     {
         $data = $this->mockUser();
-        $data->name = null;
+        $data->name = 'null';
         $data->sanitize();
-        $this->assertEquals('', $data->name);
+        $this->assertEquals('null', $data->name);
     }
 }

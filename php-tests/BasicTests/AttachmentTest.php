@@ -31,9 +31,9 @@ class AttachmentTest extends CommonTestClass
     {
         $data = $this->mockAttachment();
         $data->type = '3';
-        $data->path = null;
+        $data->path = 'null';
         $data->sanitize();
-        $this->assertEquals('', $data->path);
+        $this->assertEquals('null', $data->path);
         $this->assertEquals(Attachment::TYPE_IMAGE, $data->type);
     }
 }

@@ -10,18 +10,10 @@ namespace kalanis\EmailApi\Basics;
  */
 class Result
 {
-    /** @var bool */
-    public $status = false;
-    /** @var string|null */
-    public $data = null;
-    /** @var string|null */
-    public $remoteId = null;
+    public bool $status = false;
+    public ?string $data = null;
+    public ?string $remoteId = null;
 
-    /**
-     * @param bool $status
-     * @param string|null $data
-     * @param string|null $remoteId
-     */
     public function __construct(bool $status = false, ?string $data = null, ?string $remoteId = null)
     {
         $this->status = $status;

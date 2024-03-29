@@ -13,29 +13,15 @@ use kalanis\EmailApi\Interfaces;
  */
 class Content implements Interfaces\IContent
 {
-    /** @var string */
-    public $subject = '';
-
-    /** @var string */
-    public $body = '';
-
-    /** @var string */
-    public $tag = '';
-
-    /** @var string|null */
-    public $plain = null;
-
-    /** @var string|null */
-    public $unsubEmail = null;
-
-    /** @var string|null */
-    public $unsubLink = null;
-
-    /** @var bool */
-    public $unsubByClick = false;
-
+    public string $subject = '';
+    public string $body = '';
+    public string $tag = '';
+    public ?string $plain = null;
+    public ?string $unsubEmail = null;
+    public ?string $unsubLink = null;
+    public bool $unsubByClick = false;
     /** @var Interfaces\IContentAttachment[] */
-    protected $attachments = [];
+    protected array $attachments = [];
 
     public function setData(string $subject = '', string $body = '', string $tag = ''): self
     {
@@ -47,24 +33,24 @@ class Content implements Interfaces\IContent
 
     public function sanitize(): self
     {
-        $this->subject = (string) $this->subject;
-        $this->body = (string) $this->body;
-        $this->tag = (string) $this->tag;
-        $this->plain = is_null($this->plain) ? null : (string) $this->plain;
-        $this->unsubEmail = is_null($this->unsubEmail) ? null : (string) $this->unsubEmail ;
-        $this->unsubLink = is_null($this->unsubLink) ? null : (string) $this->unsubLink ;
-        $this->unsubByClick = (bool) $this->unsubByClick;
+        $this->subject = strval($this->subject);
+        $this->body = strval($this->body);
+        $this->tag = strval($this->tag);
+        $this->plain = is_null($this->plain) ? null : strval($this->plain);
+        $this->unsubEmail = is_null($this->unsubEmail) ? null : strval($this->unsubEmail);
+        $this->unsubLink = is_null($this->unsubLink) ? null : strval($this->unsubLink);
+        $this->unsubByClick = boolval($this->unsubByClick);
         return $this;
     }
 
     public function getSubject(): string
     {
-        return (string) $this->subject;
+        return strval($this->subject);
     }
 
     public function getHtmlBody(): string
     {
-        return (string) $this->body;
+        return strval($this->body);
     }
 
     public function getPlainBody(): ?string
@@ -74,7 +60,7 @@ class Content implements Interfaces\IContent
 
     public function getTag(): string
     {
-        return (string) $this->tag;
+        return strval($this->tag);
     }
 
     public function getUnsubscribeEmail(): ?string
@@ -89,7 +75,7 @@ class Content implements Interfaces\IContent
 
     public function canUnsubscribeOneClick(): bool
     {
-        return (bool) $this->unsubByClick;
+        return boolval($this->unsubByClick);
     }
 
     public function addAttachment(Interfaces\IContentAttachment $attachment): self

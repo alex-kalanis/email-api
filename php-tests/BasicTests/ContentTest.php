@@ -53,9 +53,9 @@ class ContentTest extends CommonTestClass
     {
         $data = $this->mockContent();
         $data->subject = 123456789;
-        $data->tag = null;
+        $data->tag = 'null';
         $data->sanitize();
-        $this->assertEquals('', $data->tag);
+        $this->assertEquals('null', $data->tag);
         $this->assertEquals('123456789', $data->subject);
     }
 }

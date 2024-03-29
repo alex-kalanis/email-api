@@ -18,9 +18,8 @@ use kalanis\EmailApi\Interfaces;
 class ServicesOrdering implements Iterator
 {
     /** @var array<int, Interfaces\ISending> */
-    protected $services = [];
-    /** @var bool */
-    protected $returnOnUnsuccessful = false;
+    protected array $services = [];
+    protected bool $returnOnUnsuccessful = false;
 
     public function addService(Interfaces\ISending $service): self
     {

@@ -12,18 +12,12 @@ use kalanis\EmailApi\Interfaces\IContentAttachment;
  */
 class Attachment implements IContentAttachment
 {
-    /** @var string */
-    public $name = '';
-    /** @var string */
-    public $path = '';
-    /** @var string */
-    public $content = '';
-    /** @var string */
-    public $mime = '';
-    /** @var string */
-    public $encoding = '';
-    /** @var int */
-    public $type = self::TYPE_INLINE;
+    public string $name = '';
+    public string $path = '';
+    public string $content = '';
+    public string $mime = '';
+    public string $encoding = '';
+    public int $type = self::TYPE_INLINE;
 
     public function setData(string $name, string $path = '', string $content = '', string $mime = '', string $encoding = '', int $type = self::TYPE_INLINE): self
     {
@@ -49,31 +43,31 @@ class Attachment implements IContentAttachment
 
     public function getFileName(): string
     {
-        return (string) $this->name;
+        return strval($this->name);
     }
 
     public function getFileContent(): string
     {
-        return (string) $this->content;
+        return strval($this->content);
     }
 
     public function getLocalPath(): string
     {
-        return (string) $this->path;
+        return strval($this->path);
     }
 
     public function getFileMime(): string
     {
-        return (string) $this->mime;
+        return strval($this->mime);
     }
 
     public function getEncoding(): string
     {
-        return (string) $this->encoding;
+        return strval($this->encoding);
     }
 
     public function getType(): int
     {
-        return (int) $this->type;
+        return intval($this->type);
     }
 }

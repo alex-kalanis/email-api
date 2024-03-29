@@ -13,10 +13,8 @@ use kalanis\EmailApi\Interfaces;
  */
 class User implements Interfaces\IEmailUser
 {
-    /** @var string */
-    public $email = '';
-    /** @var string */
-    public $name = '';
+    public string $email = '';
+    public string $name = '';
 
     public function setData(string $email, string $name = ''): self
     {
@@ -27,8 +25,8 @@ class User implements Interfaces\IEmailUser
 
     public function sanitize(): self
     {
-        $this->name = (string) $this->name;
-        $this->email = (string) $this->email;
+        $this->name = strval($this->name);
+        $this->email = strval($this->email);
         return $this;
     }
 

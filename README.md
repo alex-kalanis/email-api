@@ -1,9 +1,9 @@
 # Email Api
 
-[![Build Status](https://app.travis-ci.com/alex-kalanis/email-api.svg?branch=master)](https://app.travis-ci.com/github/alex-kalanis/email-api)
+![Build Status](https://github.com/alex-kalanis/email-api/actions/workflows/code_checks.yml/badge.svg)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/alex-kalanis/email-api/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/alex-kalanis/email-api/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/alex-kalanis/email-api/v/stable.svg?v=1)](https://packagist.org/packages/alex-kalanis/email-api)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
 [![Downloads](https://img.shields.io/packagist/dt/alex-kalanis/email-api.svg?v1)](https://packagist.org/packages/alex-kalanis/email-api)
 [![License](https://poser.pugx.org/alex-kalanis/email-api/license.svg?v=1)](https://packagist.org/packages/alex-kalanis/email-api)
 [![Code Coverage](https://scrutinizer-ci.com/g/alex-kalanis/email-api/badges/coverage.png?b=master&v=1)](https://scrutinizer-ci.com/g/alex-kalanis/email-api/?branch=master)
@@ -14,12 +14,8 @@ Contains libraries for sending emails via bunch of services.
 
 # PHP Installation
 
-```
-{
-    "require": {
-        "alex-kalanis/email-api": "1.0"
-    }
-}
+```bash
+composer.phar require alex-kalanis/email-api
 ```
 
 (Refer to [Composer Documentation](https://github.com/composer/composer/blob/master/doc/00-intro.md#introduction) if you are not

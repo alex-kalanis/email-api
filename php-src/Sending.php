@@ -14,10 +14,8 @@ class Sending implements Interfaces\ISending
     const CALL_RUN_DIED = 591;
     const CALL_EXCEPTION = 592;
 
-    /** @var LocalInfo\ServicesOrdering */
-    protected $servicesIterator = null;
-    /** @var Interfaces\ILocalInfo */
-    protected $info = null;
+    protected LocalInfo\ServicesOrdering $servicesIterator;
+    protected Interfaces\ILocalInfo $info;
 
     public function __construct(Interfaces\ILocalInfo $info, LocalInfo\ServicesOrdering $ordering)
     {

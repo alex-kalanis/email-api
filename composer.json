@@ -8,9 +8,10 @@
     "license": "BSD-3-Clause",
     "type": "library",
     "require": {
-        "php": ">=7.3.0"
+        "php": ">=7.4.0"
     },
     "require-dev": {
+        "shipmonk/composer-dependency-analyser": "^1.4",
         "friendsofphp/php-cs-fixer": "^3.0",
         "phpstan/phpstan": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
@@ -27,7 +28,7 @@
     "authors": [
         {
             "name": "Petr Plsek",
-            "homepage": "http://www.kalanys.com",
+            "homepage": "https://www.kalanys.com",
             "role": "Developer"
         }
     ],

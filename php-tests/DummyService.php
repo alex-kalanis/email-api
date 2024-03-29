@@ -7,12 +7,9 @@ use kalanis\EmailApi\Exceptions;
 
 class DummyService implements Interfaces\ISending
 {
-    /** @var bool */
-    protected $canUseService = true;
-    /** @var bool */
-    protected $getPassedResult = true;
-    /** @var bool */
-    protected $getFailedResult = true;
+    protected bool $canUseService = true;
+    protected bool $getPassedResult = true;
+    protected bool $getFailedResult = true;
 
     public function __construct(bool $canUseService = true, bool $getPassedResult = true, bool $getFailedResult = true)
     {
@@ -23,7 +20,7 @@ class DummyService implements Interfaces\ISending
 
     public function canUseService(): bool
     {
-        return (bool) $this->canUseService;
+        return boolval($this->canUseService);
     }
 
     public function systemServiceId(): int
